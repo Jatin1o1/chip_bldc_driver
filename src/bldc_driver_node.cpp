@@ -32,14 +32,18 @@ int main(int argc, char *argv[])
   int32_t baud = 115200;
   nh.param<std::string>("port", port, port);
 
+  std::string topic = "motor_command";
+  nh.param<std::string>("topic_name", topic, "motor_command");
+
   bldc_serial::BldcSerial serial(port.c_str(), baud);
-  
-  bldc_controller::BldcController controller(&serial);
+
+  bldc_controller::BldcController controller(&serial, topic );
 
   while (ros::ok())
   {
     ROS_INFO("Attempting connection to %s at %i baud.", port.c_str(), baud);
-
+    
+    //ROS_INFO("making motor_command subscriber at topic : %s ", topic.c_str());s
     if (serial.connect())
     {
       ROS_INFO("Connection Succesful");
@@ -57,5 +61,4 @@ int main(int argc, char *argv[])
       sleep(1);
     }
   }
-
 }

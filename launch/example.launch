@@ -2,8 +2,16 @@
 <!-- launch a single instance of the motor controller -->
 
   <arg name="port" default="/dev/ttyUSB0" />
-  <node pkg="chip_bldc_driver" type="bldc_driver_node" name="bldc_driver_node" output="screen">
+  <arg name="port1" default="/dev/ttyUSB1" />
+  
+  <node pkg="chip_bldc_driver" type="bldc_driver_node" name="bldc_driver_node_left" output="screen">
     <param name="port" value="$(arg port)" />
+    <param name="topic_name" value="motor_left" />    
+  </node>
+	
+   <node pkg="chip_bldc_driver" type="bldc_driver_node" name="bldc_driver_node_right" output="screen">
+    <param name="port" value="$(arg port1)" />
+    <param name="topic_name" value="motor_right" />    
   </node>
 
 </launch>
